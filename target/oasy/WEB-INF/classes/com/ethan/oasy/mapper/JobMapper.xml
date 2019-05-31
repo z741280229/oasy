@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.JobMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.Job" >
+    <id column="job_id" property="jobId" jdbcType="VARCHAR" />
+    <result column="job_leader" property="jobLeader" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="job_grade" property="jobGrade" jdbcType="INTEGER" />
+    <result column="job_type" property="jobType" jdbcType="INTEGER" />
+    <result column="job_key_word" property="jobKeyWord" jdbcType="VARCHAR" />
+    <result column="schedule" property="schedule" jdbcType="INTEGER" />
+    <result column="job_around_time" property="jobAroundTime" jdbcType="INTEGER" />
+    <result column="job_start_time" property="jobStartTime" jdbcType="VARCHAR" />
+    <result column="job_end_time" property="jobEndTime" jdbcType="VARCHAR" />
+    <result column="job_file_number_name" property="jobFileNumberName" jdbcType="VARCHAR" />
+    <result column="job_file_real_name" property="jobFileRealName" jdbcType="VARCHAR" />
+    <result column="job_file_type" property="jobFileType" jdbcType="VARCHAR" />
+    <result column="data_status" property="dataStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ethan.oasy.pojo.JobWithBLOBs" extends="BaseResultMap" >
+    <result column="job_content" property="jobContent" jdbcType="LONGVARCHAR" />
+    <result column="job_file" property="jobFile" jdbcType="LONGVARCHAR" />
+    <result column="job_menber" property="jobMenber" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    job_id, job_leader, job_title, job_grade, job_type, job_key_word, schedule, job_around_time, 
+    job_start_time, job_end_time, job_file_number_name, job_file_real_name, job_file_type, 
+    data_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    job_content, job_file, job_menber
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ethan.oasy.pojo.JobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.JobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.JobExample" >
+    delete from job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.JobWithBLOBs" >
+    insert into job (job_id, job_leader, job_title, 
+      job_grade, job_type, job_key_word, 
+      schedule, job_around_time, job_start_time, 
+      job_end_time, job_file_number_name, job_file_real_name, 
+      job_file_type, data_status, job_content, 
+      job_file, job_menber)
+    values (#{jobId,jdbcType=VARCHAR}, #{jobLeader,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, 
+      #{jobGrade,jdbcType=INTEGER}, #{jobType,jdbcType=INTEGER}, #{jobKeyWord,jdbcType=VARCHAR}, 
+      #{schedule,jdbcType=INTEGER}, #{jobAroundTime,jdbcType=INTEGER}, #{jobStartTime,jdbcType=VARCHAR}, 
+      #{jobEndTime,jdbcType=VARCHAR}, #{jobFileNumberName,jdbcType=VARCHAR}, #{jobFileRealName,jdbcType=VARCHAR}, 
+      #{jobFileType,jdbcType=VARCHAR}, #{dataStatus,jdbcType=TINYINT}, #{jobContent,jdbcType=LONGVARCHAR}, 
+      #{jobFile,jdbcType=LONGVARCHAR}, #{jobMenber,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.JobWithBLOBs" >
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="jobLeader != null" >
+        job_leader,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="jobGrade != null" >
+        job_grade,
+      </if>
+      <if test="jobType != null" >
+        job_type,
+      </if>
+      <if test="jobKeyWord != null" >
+        job_key_word,
+      </if>
+      <if test="schedule != null" >
+        schedule,
+      </if>
+      <if test="jobAroundTime != null" >
+        job_around_time,
+      </if>
+      <if test="jobStartTime != null" >
+        job_start_time,
+      </if>
+      <if test="jobEndTime != null" >
+        job_end_time,
+      </if>
+      <if test="jobFileNumberName != null" >
+        job_file_number_name,
+      </if>
+      <if test="jobFileRealName != null" >
+        job_file_real_name,
+      </if>
+      <if test="jobFileType != null" >
+        job_file_type,
+      </if>
+      <if test="dataStatus != null" >
+        data_status,
+      </if>
+      <if test="jobContent != null" >
+        job_content,
+      </if>
+      <if test="jobFile != null" >
+        job_file,
+      </if>
+      <if test="jobMenber != null" >
+        job_menber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobLeader != null" >
+        #{jobLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGrade != null" >
+        #{jobGrade,jdbcType=INTEGER},
+      </if>
+      <if test="jobType != null" >
+        #{jobType,jdbcType=INTEGER},
+      </if>
+      <if test="jobKeyWord != null" >
+        #{jobKeyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="schedule != null" >
+        #{schedule,jdbcType=INTEGER},
+      </if>
+      <if test="jobAroundTime != null" >
+        #{jobAroundTime,jdbcType=INTEGER},
+      </if>
+      <if test="jobStartTime != null" >
+        #{jobStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobEndTime != null" >
+        #{jobEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileNumberName != null" >
+        #{jobFileNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileRealName != null" >
+        #{jobFileRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileType != null" >
+        #{jobFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        #{dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="jobContent != null" >
+        #{jobContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobFile != null" >
+        #{jobFile,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobMenber != null" >
+        #{jobMenber,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.JobExample" resultType="java.lang.Integer" >
+    select count(*) from job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update job
+    <set >
+      <if test="record.jobId != null" >
+        job_id = #{record.jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobLeader != null" >
+        job_leader = #{record.jobLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobTitle != null" >
+        job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobGrade != null" >
+        job_grade = #{record.jobGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobType != null" >
+        job_type = #{record.jobType,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobKeyWord != null" >
+        job_key_word = #{record.jobKeyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schedule != null" >
+        schedule = #{record.schedule,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobAroundTime != null" >
+        job_around_time = #{record.jobAroundTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobStartTime != null" >
+        job_start_time = #{record.jobStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobEndTime != null" >
+        job_end_time = #{record.jobEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFileNumberName != null" >
+        job_file_number_name = #{record.jobFileNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFileRealName != null" >
+        job_file_real_name = #{record.jobFileRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFileType != null" >
+        job_file_type = #{record.jobFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataStatus != null" >
+        data_status = #{record.dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.jobContent != null" >
+        job_content = #{record.jobContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.jobFile != null" >
+        job_file = #{record.jobFile,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.jobMenber != null" >
+        job_menber = #{record.jobMenber,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update job
+    set job_id = #{record.jobId,jdbcType=VARCHAR},
+      job_leader = #{record.jobLeader,jdbcType=VARCHAR},
+      job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      job_grade = #{record.jobGrade,jdbcType=INTEGER},
+      job_type = #{record.jobType,jdbcType=INTEGER},
+      job_key_word = #{record.jobKeyWord,jdbcType=VARCHAR},
+      schedule = #{record.schedule,jdbcType=INTEGER},
+      job_around_time = #{record.jobAroundTime,jdbcType=INTEGER},
+      job_start_time = #{record.jobStartTime,jdbcType=VARCHAR},
+      job_end_time = #{record.jobEndTime,jdbcType=VARCHAR},
+      job_file_number_name = #{record.jobFileNumberName,jdbcType=VARCHAR},
+      job_file_real_name = #{record.jobFileRealName,jdbcType=VARCHAR},
+      job_file_type = #{record.jobFileType,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=TINYINT},
+      job_content = #{record.jobContent,jdbcType=LONGVARCHAR},
+      job_file = #{record.jobFile,jdbcType=LONGVARCHAR},
+      job_menber = #{record.jobMenber,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update job
+    set job_id = #{record.jobId,jdbcType=VARCHAR},
+      job_leader = #{record.jobLeader,jdbcType=VARCHAR},
+      job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      job_grade = #{record.jobGrade,jdbcType=INTEGER},
+      job_type = #{record.jobType,jdbcType=INTEGER},
+      job_key_word = #{record.jobKeyWord,jdbcType=VARCHAR},
+      schedule = #{record.schedule,jdbcType=INTEGER},
+      job_around_time = #{record.jobAroundTime,jdbcType=INTEGER},
+      job_start_time = #{record.jobStartTime,jdbcType=VARCHAR},
+      job_end_time = #{record.jobEndTime,jdbcType=VARCHAR},
+      job_file_number_name = #{record.jobFileNumberName,jdbcType=VARCHAR},
+      job_file_real_name = #{record.jobFileRealName,jdbcType=VARCHAR},
+      job_file_type = #{record.jobFileType,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.JobWithBLOBs" >
+    update job
+    <set >
+      <if test="jobLeader != null" >
+        job_leader = #{jobLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGrade != null" >
+        job_grade = #{jobGrade,jdbcType=INTEGER},
+      </if>
+      <if test="jobType != null" >
+        job_type = #{jobType,jdbcType=INTEGER},
+      </if>
+      <if test="jobKeyWord != null" >
+        job_key_word = #{jobKeyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="schedule != null" >
+        schedule = #{schedule,jdbcType=INTEGER},
+      </if>
+      <if test="jobAroundTime != null" >
+        job_around_time = #{jobAroundTime,jdbcType=INTEGER},
+      </if>
+      <if test="jobStartTime != null" >
+        job_start_time = #{jobStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobEndTime != null" >
+        job_end_time = #{jobEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileNumberName != null" >
+        job_file_number_name = #{jobFileNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileRealName != null" >
+        job_file_real_name = #{jobFileRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFileType != null" >
+        job_file_type = #{jobFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        data_status = #{dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="jobContent != null" >
+        job_content = #{jobContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobFile != null" >
+        job_file = #{jobFile,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobMenber != null" >
+        job_menber = #{jobMenber,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ethan.oasy.pojo.JobWithBLOBs" >
+    update job
+    set job_leader = #{jobLeader,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      job_grade = #{jobGrade,jdbcType=INTEGER},
+      job_type = #{jobType,jdbcType=INTEGER},
+      job_key_word = #{jobKeyWord,jdbcType=VARCHAR},
+      schedule = #{schedule,jdbcType=INTEGER},
+      job_around_time = #{jobAroundTime,jdbcType=INTEGER},
+      job_start_time = #{jobStartTime,jdbcType=VARCHAR},
+      job_end_time = #{jobEndTime,jdbcType=VARCHAR},
+      job_file_number_name = #{jobFileNumberName,jdbcType=VARCHAR},
+      job_file_real_name = #{jobFileRealName,jdbcType=VARCHAR},
+      job_file_type = #{jobFileType,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=TINYINT},
+      job_content = #{jobContent,jdbcType=LONGVARCHAR},
+      job_file = #{jobFile,jdbcType=LONGVARCHAR},
+      job_menber = #{jobMenber,jdbcType=LONGVARCHAR}
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.Job" >
+    update job
+    set job_leader = #{jobLeader,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      job_grade = #{jobGrade,jdbcType=INTEGER},
+      job_type = #{jobType,jdbcType=INTEGER},
+      job_key_word = #{jobKeyWord,jdbcType=VARCHAR},
+      schedule = #{schedule,jdbcType=INTEGER},
+      job_around_time = #{jobAroundTime,jdbcType=INTEGER},
+      job_start_time = #{jobStartTime,jdbcType=VARCHAR},
+      job_end_time = #{jobEndTime,jdbcType=VARCHAR},
+      job_file_number_name = #{jobFileNumberName,jdbcType=VARCHAR},
+      job_file_real_name = #{jobFileRealName,jdbcType=VARCHAR},
+      job_file_type = #{jobFileType,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=TINYINT}
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getJobsByStaffId" resultType="JobWithBLOBs">
+    SELECT
+      j.`job_around_time` jobAroundTime,
+      j.`job_content` jobContent,
+      j.`job_end_time` jobEndTime,
+      j.`job_file` jobFile,
+      j.`job_file_number_name` jobFileNumberName,
+      j.`job_file_real_name` jobFileRealName,
+      j.`job_file_type` jobFileType,
+      j.`job_grade` jobGrade,
+      j.`job_id` jobId,
+      j.`job_key_word` jobKeyWord,
+      j.`job_leader` jobLeader,
+      j.`job_menber` jobMenber,
+      j.`job_start_time` jobStartTime,
+      j.`job_title` jobTitle,
+      j.`job_type` jobType,
+      j.`schedule` SCHEDULE,
+      st.`staff_name` jobLeaderName
+    FROM job j,staff_job s,staff st
+    WHERE j.`data_status` = 1 AND s.`dataStatus` = 1 AND j.`job_leader` = st.`staff_id`
+      AND s.`job_id` = j.`job_id` AND s.`staff_id` = #{staffId,jdbcType=VARCHAR};
+  </select>
+
+  <select id="findMySubJob" resultType="JobWithBLOBs">
+    SELECT
+      j.`job_around_time` jobAroundTime,
+      j.`job_content` jobContent,
+      j.`job_end_time` jobEndTime,
+      j.`job_file` jobFile,
+      j.`job_file_number_name` jobFileNumberName,
+      j.`job_file_real_name` jobFileRealName,
+      j.`job_file_type` jobFileType,
+      j.`job_grade` jobGrade,
+      j.`job_id` jobId,
+      j.`job_key_word` jobKeyWord,
+      j.`job_leader` jobLeader,
+      j.`job_menber` jobMenber,
+      j.`job_start_time` jobStartTime,
+      j.`job_title` jobTitle,
+      j.`job_type` jobType,
+      j.`schedule` SCHEDULE,
+      s1.`staff_name` jobLeaderName
+    FROM department d,staff s, staff s1,staff_job st, job j
+    WHERE d.`depart_leader`= #{staffId,jdbcType=VARCHAR}
+      AND d.`data_status` = 1 AND d.`depart_id` = s.`staff_depart` AND s.`data_status` = 1
+      AND st.`staff_id` = s.`staff_id` AND st.`dataStatus`=1 AND st.`job_id` = j.`job_id` AND j.`data_status` =1 AND s1.`staff_id` = j.`job_leader` AND s1.`data_status` =1
+  </select>
+
+<select id="findJobParticipant" resultType="Staff">
+    SELECT
+        s.`staff_acc_num` staffAccNum,
+        s.`staff_gender` staffGender,
+        s.`staff_depart` staffDepart,
+        d.`depart_name` departName,
+        s.`staff_tel` staffTel,
+        s.`staff_id` staffId,
+        s.`staff_name` staffName
+    FROM staff s,staff_job sj,department d
+    WHERE sj.`staff_id` = s.`staff_id` AND sj.`job_id`=#{jobId,jdbcType=VARCHAR}
+      AND d.`depart_id` = s.`staff_depart`
+      AND sj.`dataStatus` = 1
+</select>
+
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.DictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.Dictionary" >
+    <id column="dict_id" property="dictId" jdbcType="INTEGER" />
+    <result column="dict_type_id" property="dictTypeId" jdbcType="VARCHAR" />
+    <result column="dict_type_num" property="dictTypeNum" jdbcType="VARCHAR" />
+    <result column="dict_type_details" property="dictTypeDetails" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dict_id, dict_type_id, dict_type_num, dict_type_details
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.DictionaryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dictionary
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.DictionaryExample" >
+    delete from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.Dictionary" >
+    insert into dictionary (dict_id, dict_type_id, dict_type_num, 
+      dict_type_details)
+    values (#{dictId,jdbcType=INTEGER}, #{dictTypeId,jdbcType=VARCHAR}, #{dictTypeNum,jdbcType=VARCHAR}, 
+      #{dictTypeDetails,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.Dictionary" >
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        dict_id,
+      </if>
+      <if test="dictTypeId != null" >
+        dict_type_id,
+      </if>
+      <if test="dictTypeNum != null" >
+        dict_type_num,
+      </if>
+      <if test="dictTypeDetails != null" >
+        dict_type_details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        #{dictId,jdbcType=INTEGER},
+      </if>
+      <if test="dictTypeId != null" >
+        #{dictTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeNum != null" >
+        #{dictTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeDetails != null" >
+        #{dictTypeDetails,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.DictionaryExample" resultType="java.lang.Integer" >
+    select count(*) from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dictionary
+    <set >
+      <if test="record.dictId != null" >
+        dict_id = #{record.dictId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dictTypeId != null" >
+        dict_type_id = #{record.dictTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictTypeNum != null" >
+        dict_type_num = #{record.dictTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictTypeDetails != null" >
+        dict_type_details = #{record.dictTypeDetails,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dictionary
+    set dict_id = #{record.dictId,jdbcType=INTEGER},
+      dict_type_id = #{record.dictTypeId,jdbcType=VARCHAR},
+      dict_type_num = #{record.dictTypeNum,jdbcType=VARCHAR},
+      dict_type_details = #{record.dictTypeDetails,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.Dictionary" >
+    update dictionary
+    <set >
+      <if test="dictTypeId != null" >
+        dict_type_id = #{dictTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeNum != null" >
+        dict_type_num = #{dictTypeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeDetails != null" >
+        dict_type_details = #{dictTypeDetails,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.Dictionary" >
+    update dictionary
+    set dict_type_id = #{dictTypeId,jdbcType=VARCHAR},
+      dict_type_num = #{dictTypeNum,jdbcType=VARCHAR},
+      dict_type_details = #{dictTypeDetails,jdbcType=VARCHAR}
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </update>
+</mapper>

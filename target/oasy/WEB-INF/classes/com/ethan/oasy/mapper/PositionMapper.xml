@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.PositionMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.Position" >
+    <id column="posi_id" property="posiId" jdbcType="VARCHAR" />
+    <result column="posi_name" property="posiName" jdbcType="VARCHAR" />
+    <result column="posi_content" property="posiContent" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="close_time" property="closeTime" jdbcType="VARCHAR" />
+    <result column="sub_posi" property="subPosi" jdbcType="VARCHAR" />
+    <result column="parent_posi" property="parentPosi" jdbcType="VARCHAR" />
+    <result column="data_status" property="dataStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    posi_id, posi_name, posi_content, create_time, close_time, sub_posi, parent_posi, 
+    data_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.PositionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from position
+    where posi_id = #{posiId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from position
+    where posi_id = #{posiId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.PositionExample" >
+    delete from position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.Position" >
+    insert into position (posi_id, posi_name, posi_content, 
+      create_time, close_time, sub_posi, 
+      parent_posi, data_status)
+    values (#{posiId,jdbcType=VARCHAR}, #{posiName,jdbcType=VARCHAR}, #{posiContent,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{closeTime,jdbcType=VARCHAR}, #{subPosi,jdbcType=VARCHAR}, 
+      #{parentPosi,jdbcType=VARCHAR}, #{dataStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.Position" >
+    insert into position
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="posiId != null" >
+        posi_id,
+      </if>
+      <if test="posiName != null" >
+        posi_name,
+      </if>
+      <if test="posiContent != null" >
+        posi_content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="closeTime != null" >
+        close_time,
+      </if>
+      <if test="subPosi != null" >
+        sub_posi,
+      </if>
+      <if test="parentPosi != null" >
+        parent_posi,
+      </if>
+      <if test="dataStatus != null" >
+        data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="posiId != null" >
+        #{posiId,jdbcType=VARCHAR},
+      </if>
+      <if test="posiName != null" >
+        #{posiName,jdbcType=VARCHAR},
+      </if>
+      <if test="posiContent != null" >
+        #{posiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subPosi != null" >
+        #{subPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPosi != null" >
+        #{parentPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        #{dataStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.PositionExample" resultType="java.lang.Integer" >
+    select count(*) from position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update position
+    <set >
+      <if test="record.posiId != null" >
+        posi_id = #{record.posiId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posiName != null" >
+        posi_name = #{record.posiName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posiContent != null" >
+        posi_content = #{record.posiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.closeTime != null" >
+        close_time = #{record.closeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subPosi != null" >
+        sub_posi = #{record.subPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentPosi != null" >
+        parent_posi = #{record.parentPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataStatus != null" >
+        data_status = #{record.dataStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update position
+    set posi_id = #{record.posiId,jdbcType=VARCHAR},
+      posi_name = #{record.posiName,jdbcType=VARCHAR},
+      posi_content = #{record.posiContent,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      close_time = #{record.closeTime,jdbcType=VARCHAR},
+      sub_posi = #{record.subPosi,jdbcType=VARCHAR},
+      parent_posi = #{record.parentPosi,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.Position" >
+    update position
+    <set >
+      <if test="posiName != null" >
+        posi_name = #{posiName,jdbcType=VARCHAR},
+      </if>
+      <if test="posiContent != null" >
+        posi_content = #{posiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        close_time = #{closeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subPosi != null" >
+        sub_posi = #{subPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPosi != null" >
+        parent_posi = #{parentPosi,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        data_status = #{dataStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where posi_id = #{posiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.Position" >
+    update position
+    set posi_name = #{posiName,jdbcType=VARCHAR},
+      posi_content = #{posiContent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      close_time = #{closeTime,jdbcType=VARCHAR},
+      sub_posi = #{subPosi,jdbcType=VARCHAR},
+      parent_posi = #{parentPosi,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=TINYINT}
+    where posi_id = #{posiId,jdbcType=VARCHAR}
+  </update>
+</mapper>

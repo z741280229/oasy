@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.OfficeSuppliesCheckLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.OfficeSuppliesCheckLog" >
+    <id column="os_check_Id" property="osCheckId" jdbcType="INTEGER" />
+    <result column="os_id" property="osId" jdbcType="VARCHAR" />
+    <result column="os_now_num" property="osNowNum" jdbcType="INTEGER" />
+    <result column="os_now_check_num" property="osNowCheckNum" jdbcType="INTEGER" />
+    <result column="check_time" property="checkTime" jdbcType="VARCHAR" />
+    <result column="check_staff" property="checkStaff" jdbcType="VARCHAR" />
+    <result column="check_staff_name" property="checkStaffName" jdbcType="VARCHAR" />
+    <result column="datatStatus" property="datatstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    os_check_Id, os_id, os_now_num, os_now_check_num, check_time, check_staff, check_staff_name, 
+    datatStatus
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from office_supplies_check_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from office_supplies_check_log
+    where os_check_Id = #{osCheckId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from office_supplies_check_log
+    where os_check_Id = #{osCheckId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLogExample" >
+    delete from office_supplies_check_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLog" >
+    insert into office_supplies_check_log (os_check_Id, os_id, os_now_num, 
+      os_now_check_num, check_time, check_staff, 
+      check_staff_name, datatStatus)
+    values (#{osCheckId,jdbcType=INTEGER}, #{osId,jdbcType=VARCHAR}, #{osNowNum,jdbcType=INTEGER}, 
+      #{osNowCheckNum,jdbcType=INTEGER}, #{checkTime,jdbcType=VARCHAR}, #{checkStaff,jdbcType=VARCHAR}, 
+      #{checkStaffName,jdbcType=VARCHAR}, #{datatstatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLog" >
+    insert into office_supplies_check_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="osCheckId != null" >
+        os_check_Id,
+      </if>
+      <if test="osId != null" >
+        os_id,
+      </if>
+      <if test="osNowNum != null" >
+        os_now_num,
+      </if>
+      <if test="osNowCheckNum != null" >
+        os_now_check_num,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="checkStaff != null" >
+        check_staff,
+      </if>
+      <if test="checkStaffName != null" >
+        check_staff_name,
+      </if>
+      <if test="datatstatus != null" >
+        datatStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="osCheckId != null" >
+        #{osCheckId,jdbcType=INTEGER},
+      </if>
+      <if test="osId != null" >
+        #{osId,jdbcType=VARCHAR},
+      </if>
+      <if test="osNowNum != null" >
+        #{osNowNum,jdbcType=INTEGER},
+      </if>
+      <if test="osNowCheckNum != null" >
+        #{osNowCheckNum,jdbcType=INTEGER},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStaff != null" >
+        #{checkStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStaffName != null" >
+        #{checkStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="datatstatus != null" >
+        #{datatstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLogExample" resultType="java.lang.Integer" >
+    select count(*) from office_supplies_check_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update office_supplies_check_log
+    <set >
+      <if test="record.osCheckId != null" >
+        os_check_Id = #{record.osCheckId,jdbcType=INTEGER},
+      </if>
+      <if test="record.osId != null" >
+        os_id = #{record.osId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osNowNum != null" >
+        os_now_num = #{record.osNowNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.osNowCheckNum != null" >
+        os_now_check_num = #{record.osNowCheckNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkTime != null" >
+        check_time = #{record.checkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStaff != null" >
+        check_staff = #{record.checkStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStaffName != null" >
+        check_staff_name = #{record.checkStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datatstatus != null" >
+        datatStatus = #{record.datatstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update office_supplies_check_log
+    set os_check_Id = #{record.osCheckId,jdbcType=INTEGER},
+      os_id = #{record.osId,jdbcType=VARCHAR},
+      os_now_num = #{record.osNowNum,jdbcType=INTEGER},
+      os_now_check_num = #{record.osNowCheckNum,jdbcType=INTEGER},
+      check_time = #{record.checkTime,jdbcType=VARCHAR},
+      check_staff = #{record.checkStaff,jdbcType=VARCHAR},
+      check_staff_name = #{record.checkStaffName,jdbcType=VARCHAR},
+      datatStatus = #{record.datatstatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLog" >
+    update office_supplies_check_log
+    <set >
+      <if test="osId != null" >
+        os_id = #{osId,jdbcType=VARCHAR},
+      </if>
+      <if test="osNowNum != null" >
+        os_now_num = #{osNowNum,jdbcType=INTEGER},
+      </if>
+      <if test="osNowCheckNum != null" >
+        os_now_check_num = #{osNowCheckNum,jdbcType=INTEGER},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStaff != null" >
+        check_staff = #{checkStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStaffName != null" >
+        check_staff_name = #{checkStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="datatstatus != null" >
+        datatStatus = #{datatstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where os_check_Id = #{osCheckId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.OfficeSuppliesCheckLog" >
+    update office_supplies_check_log
+    set os_id = #{osId,jdbcType=VARCHAR},
+      os_now_num = #{osNowNum,jdbcType=INTEGER},
+      os_now_check_num = #{osNowCheckNum,jdbcType=INTEGER},
+      check_time = #{checkTime,jdbcType=VARCHAR},
+      check_staff = #{checkStaff,jdbcType=VARCHAR},
+      check_staff_name = #{checkStaffName,jdbcType=VARCHAR},
+      datatStatus = #{datatstatus,jdbcType=INTEGER}
+    where os_check_Id = #{osCheckId,jdbcType=INTEGER}
+  </update>
+</mapper>

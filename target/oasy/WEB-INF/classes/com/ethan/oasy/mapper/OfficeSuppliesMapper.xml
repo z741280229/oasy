@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.OfficeSuppliesMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.OfficeSupplies" >
+    <id column="os_id" property="osId" jdbcType="VARCHAR" />
+    <result column="os_name" property="osName" jdbcType="VARCHAR" />
+    <result column="os_ord_num" property="osOrdNum" jdbcType="VARCHAR" />
+    <result column="os_category" property="osCategory" jdbcType="INTEGER" />
+    <result column="os_specification" property="osSpecification" jdbcType="VARCHAR" />
+    <result column="os_unit" property="osUnit" jdbcType="INTEGER" />
+    <result column="os_price" property="osPrice" jdbcType="DECIMAL" />
+    <result column="os_total" property="osTotal" jdbcType="INTEGER" />
+    <result column="os_not_input" property="osNotInput" jdbcType="INTEGER" />
+    <result column="os_statistical_date" property="osStatisticalDate" jdbcType="VARCHAR" />
+    <result column="data_status" property="dataStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    os_id, os_name, os_ord_num, os_category, os_specification, os_unit, os_price, os_total, 
+    os_not_input, os_statistical_date, data_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.OfficeSuppliesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from office_supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from office_supplies
+    where os_id = #{osId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from office_supplies
+    where os_id = #{osId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.OfficeSuppliesExample" >
+    delete from office_supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.OfficeSupplies" >
+    insert into office_supplies (os_id, os_name, os_ord_num, 
+      os_category, os_specification, os_unit, 
+      os_price, os_total, os_not_input, 
+      os_statistical_date, data_status)
+    values (#{osId,jdbcType=VARCHAR}, #{osName,jdbcType=VARCHAR}, #{osOrdNum,jdbcType=VARCHAR}, 
+      #{osCategory,jdbcType=INTEGER}, #{osSpecification,jdbcType=VARCHAR}, #{osUnit,jdbcType=INTEGER}, 
+      #{osPrice,jdbcType=DECIMAL}, #{osTotal,jdbcType=INTEGER}, #{osNotInput,jdbcType=INTEGER}, 
+      #{osStatisticalDate,jdbcType=VARCHAR}, #{dataStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.OfficeSupplies" >
+    insert into office_supplies
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="osId != null" >
+        os_id,
+      </if>
+      <if test="osName != null" >
+        os_name,
+      </if>
+      <if test="osOrdNum != null" >
+        os_ord_num,
+      </if>
+      <if test="osCategory != null" >
+        os_category,
+      </if>
+      <if test="osSpecification != null" >
+        os_specification,
+      </if>
+      <if test="osUnit != null" >
+        os_unit,
+      </if>
+      <if test="osPrice != null" >
+        os_price,
+      </if>
+      <if test="osTotal != null" >
+        os_total,
+      </if>
+      <if test="osNotInput != null" >
+        os_not_input,
+      </if>
+      <if test="osStatisticalDate != null" >
+        os_statistical_date,
+      </if>
+      <if test="dataStatus != null" >
+        data_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="osId != null" >
+        #{osId,jdbcType=VARCHAR},
+      </if>
+      <if test="osName != null" >
+        #{osName,jdbcType=VARCHAR},
+      </if>
+      <if test="osOrdNum != null" >
+        #{osOrdNum,jdbcType=VARCHAR},
+      </if>
+      <if test="osCategory != null" >
+        #{osCategory,jdbcType=INTEGER},
+      </if>
+      <if test="osSpecification != null" >
+        #{osSpecification,jdbcType=VARCHAR},
+      </if>
+      <if test="osUnit != null" >
+        #{osUnit,jdbcType=INTEGER},
+      </if>
+      <if test="osPrice != null" >
+        #{osPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="osTotal != null" >
+        #{osTotal,jdbcType=INTEGER},
+      </if>
+      <if test="osNotInput != null" >
+        #{osNotInput,jdbcType=INTEGER},
+      </if>
+      <if test="osStatisticalDate != null" >
+        #{osStatisticalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        #{dataStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.OfficeSuppliesExample" resultType="java.lang.Integer" >
+    select count(*) from office_supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update office_supplies
+    <set >
+      <if test="record.osId != null" >
+        os_id = #{record.osId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osName != null" >
+        os_name = #{record.osName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osOrdNum != null" >
+        os_ord_num = #{record.osOrdNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osCategory != null" >
+        os_category = #{record.osCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.osSpecification != null" >
+        os_specification = #{record.osSpecification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osUnit != null" >
+        os_unit = #{record.osUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.osPrice != null" >
+        os_price = #{record.osPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.osTotal != null" >
+        os_total = #{record.osTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.osNotInput != null" >
+        os_not_input = #{record.osNotInput,jdbcType=INTEGER},
+      </if>
+      <if test="record.osStatisticalDate != null" >
+        os_statistical_date = #{record.osStatisticalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataStatus != null" >
+        data_status = #{record.dataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update office_supplies
+    set os_id = #{record.osId,jdbcType=VARCHAR},
+      os_name = #{record.osName,jdbcType=VARCHAR},
+      os_ord_num = #{record.osOrdNum,jdbcType=VARCHAR},
+      os_category = #{record.osCategory,jdbcType=INTEGER},
+      os_specification = #{record.osSpecification,jdbcType=VARCHAR},
+      os_unit = #{record.osUnit,jdbcType=INTEGER},
+      os_price = #{record.osPrice,jdbcType=DECIMAL},
+      os_total = #{record.osTotal,jdbcType=INTEGER},
+      os_not_input = #{record.osNotInput,jdbcType=INTEGER},
+      os_statistical_date = #{record.osStatisticalDate,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.OfficeSupplies" >
+    update office_supplies
+    <set >
+      <if test="osName != null" >
+        os_name = #{osName,jdbcType=VARCHAR},
+      </if>
+      <if test="osOrdNum != null" >
+        os_ord_num = #{osOrdNum,jdbcType=VARCHAR},
+      </if>
+      <if test="osCategory != null" >
+        os_category = #{osCategory,jdbcType=INTEGER},
+      </if>
+      <if test="osSpecification != null" >
+        os_specification = #{osSpecification,jdbcType=VARCHAR},
+      </if>
+      <if test="osUnit != null" >
+        os_unit = #{osUnit,jdbcType=INTEGER},
+      </if>
+      <if test="osPrice != null" >
+        os_price = #{osPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="osTotal != null" >
+        os_total = #{osTotal,jdbcType=INTEGER},
+      </if>
+      <if test="osNotInput != null" >
+        os_not_input = #{osNotInput,jdbcType=INTEGER},
+      </if>
+      <if test="osStatisticalDate != null" >
+        os_statistical_date = #{osStatisticalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        data_status = #{dataStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where os_id = #{osId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.OfficeSupplies" >
+    update office_supplies
+    set os_name = #{osName,jdbcType=VARCHAR},
+      os_ord_num = #{osOrdNum,jdbcType=VARCHAR},
+      os_category = #{osCategory,jdbcType=INTEGER},
+      os_specification = #{osSpecification,jdbcType=VARCHAR},
+      os_unit = #{osUnit,jdbcType=INTEGER},
+      os_price = #{osPrice,jdbcType=DECIMAL},
+      os_total = #{osTotal,jdbcType=INTEGER},
+      os_not_input = #{osNotInput,jdbcType=INTEGER},
+      os_statistical_date = #{osStatisticalDate,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=INTEGER}
+    where os_id = #{osId,jdbcType=VARCHAR}
+  </update>
+</mapper>

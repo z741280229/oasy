@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.Department" >
+    <id column="depart_id" property="departId" jdbcType="VARCHAR" />
+    <result column="depart_num" property="departNum" jdbcType="VARCHAR" />
+    <result column="depart_leader" property="departLeader" jdbcType="VARCHAR" />
+    <result column="depart_name" property="departName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="sub_sd" property="subSd" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="close_date" property="closeDate" jdbcType="VARCHAR" />
+    <result column="data_status" property="dataStatus" jdbcType="TINYINT" />
+    <result column="dapart_type" property="dapartType" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ethan.oasy.pojo.Department" extends="BaseResultMap" >
+    <result column="depart_duty" property="departDuty" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    depart_id, depart_num, depart_leader, depart_name, parent_id, sub_sd, create_date, 
+    close_date, data_status, dapart_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    depart_duty
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ethan.oasy.pojo.DepartmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.DepartmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from department
+    where depart_id = #{departId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from department
+    where depart_id = #{departId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.DepartmentExample" >
+    delete from department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.Department" >
+    insert into department (depart_id, depart_num, depart_leader, 
+      depart_name, parent_id, sub_sd, 
+      create_date, close_date, data_status, 
+      dapart_type, depart_duty)
+    values (#{departId,jdbcType=VARCHAR}, #{departNum,jdbcType=VARCHAR}, #{departLeader,jdbcType=VARCHAR}, 
+      #{departName,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{subSd,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{closeDate,jdbcType=VARCHAR}, #{dataStatus,jdbcType=TINYINT}, 
+      #{dapartType,jdbcType=INTEGER}, #{departDuty,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.Department" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        depart_id,
+      </if>
+      <if test="departNum != null" >
+        depart_num,
+      </if>
+      <if test="departLeader != null" >
+        depart_leader,
+      </if>
+      <if test="departName != null" >
+        depart_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="subSd != null" >
+        sub_sd,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="closeDate != null" >
+        close_date,
+      </if>
+      <if test="dataStatus != null" >
+        data_status,
+      </if>
+      <if test="dapartType != null" >
+        dapart_type,
+      </if>
+      <if test="departDuty != null" >
+        depart_duty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="departNum != null" >
+        #{departNum,jdbcType=VARCHAR},
+      </if>
+      <if test="departLeader != null" >
+        #{departLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="departName != null" >
+        #{departName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="subSd != null" >
+        #{subSd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="closeDate != null" >
+        #{closeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        #{dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="dapartType != null" >
+        #{dapartType,jdbcType=INTEGER},
+      </if>
+      <if test="departDuty != null" >
+        #{departDuty,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.DepartmentExample" resultType="java.lang.Integer" >
+    select count(*) from department
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update department
+    <set >
+      <if test="record.departId != null" >
+        depart_id = #{record.departId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departNum != null" >
+        depart_num = #{record.departNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departLeader != null" >
+        depart_leader = #{record.departLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departName != null" >
+        depart_name = #{record.departName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subSd != null" >
+        sub_sd = #{record.subSd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.closeDate != null" >
+        close_date = #{record.closeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataStatus != null" >
+        data_status = #{record.dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.dapartType != null" >
+        dapart_type = #{record.dapartType,jdbcType=INTEGER},
+      </if>
+      <if test="record.departDuty != null" >
+        depart_duty = #{record.departDuty,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update department
+    set depart_id = #{record.departId,jdbcType=VARCHAR},
+      depart_num = #{record.departNum,jdbcType=VARCHAR},
+      depart_leader = #{record.departLeader,jdbcType=VARCHAR},
+      depart_name = #{record.departName,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      sub_sd = #{record.subSd,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=VARCHAR},
+      close_date = #{record.closeDate,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=TINYINT},
+      dapart_type = #{record.dapartType,jdbcType=INTEGER},
+      depart_duty = #{record.departDuty,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update department
+    set depart_id = #{record.departId,jdbcType=VARCHAR},
+      depart_num = #{record.departNum,jdbcType=VARCHAR},
+      depart_leader = #{record.departLeader,jdbcType=VARCHAR},
+      depart_name = #{record.departName,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      sub_sd = #{record.subSd,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=VARCHAR},
+      close_date = #{record.closeDate,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=TINYINT},
+      dapart_type = #{record.dapartType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.Department" >
+    update department
+    <set >
+      <if test="departNum != null" >
+        depart_num = #{departNum,jdbcType=VARCHAR},
+      </if>
+      <if test="departLeader != null" >
+        depart_leader = #{departLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="departName != null" >
+        depart_name = #{departName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="subSd != null" >
+        sub_sd = #{subSd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="closeDate != null" >
+        close_date = #{closeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        data_status = #{dataStatus,jdbcType=TINYINT},
+      </if>
+      <if test="dapartType != null" >
+        dapart_type = #{dapartType,jdbcType=INTEGER},
+      </if>
+      <if test="departDuty != null" >
+        depart_duty = #{departDuty,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where depart_id = #{departId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ethan.oasy.pojo.Department" >
+    update department
+    set depart_num = #{departNum,jdbcType=VARCHAR},
+      depart_leader = #{departLeader,jdbcType=VARCHAR},
+      depart_name = #{departName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      sub_sd = #{subSd,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      close_date = #{closeDate,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=TINYINT},
+      dapart_type = #{dapartType,jdbcType=INTEGER},
+      depart_duty = #{departDuty,jdbcType=LONGVARCHAR}
+    where depart_id = #{departId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.Department" >
+    update department
+    set depart_num = #{departNum,jdbcType=VARCHAR},
+      depart_leader = #{departLeader,jdbcType=VARCHAR},
+      depart_name = #{departName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      sub_sd = #{subSd,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      close_date = #{closeDate,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=TINYINT},
+      dapart_type = #{dapartType,jdbcType=INTEGER}
+    where depart_id = #{departId,jdbcType=VARCHAR}
+  </update>
+
+
+  <select id="findAllDepartments" resultType="com.ethan.oasy.pojo.DepartmentDetails">
+    SELECT
+      d1.`depart_id` departId,
+      d1.`depart_num` departNum,
+      d1.`depart_name` departName,
+      d1.`parent_id` parentId,
+      d2.`depart_name` parentName,
+      d1.`create_date` createTime,
+      d1.`depart_duty` departDuty,
+      d3.`dict_id` dapartTypeId,
+      d3.`dict_type_details` dapartType
+    FROM department d1,department d2,dictionary d3
+    WHERE d1.`dapart_type` = d3.`dict_id`  AND d1.`parent_id` = d2.`depart_id` AND d1.`data_status` = 1
+  </select>
+
+
+  <select id="findChildDepartment" resultType="com.ethan.oasy.pojo.DepartmentDetails">
+    SELECT
+      d1.`depart_id` departId,
+      d1.`depart_num` departNum,
+      d1.`depart_name` departName,
+      d1.`parent_id` parentId,
+      d2.`depart_name` parentName,
+      d1.`create_date` createTime,
+      d1.`depart_duty` departDuty,
+      d3.`dict_id` dapartTypeId,
+      d3.`dict_type_details` dapartType
+    FROM department d1,department d2,dictionary d3
+    WHERE d1.`dapart_type` = d3.`dict_id`  AND d1.`parent_id` = d2.`depart_id` AND d1.`data_status` = 1 AND d1.`parent_id` = #{parentId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="findTopDepartment" resultType="com.ethan.oasy.pojo.DepartmentDetails">
+    SELECT
+      d1.`depart_id` departId,
+      d1.`depart_num` departNum,
+      d1.`depart_name` departName,
+      d1.`create_date` createTime,
+      d1.`depart_duty` departDuty,
+      d1.`dapart_type` dapartTypeId,
+      d2.`dict_type_details` dapartType
+    FROM department d1,dictionary d2
+    WHERE d1.`parent_id` = '0' AND d1.`dapart_type` = d2.`dict_id` AND d1.`data_status` = 1
+  </select>
+
+</mapper>

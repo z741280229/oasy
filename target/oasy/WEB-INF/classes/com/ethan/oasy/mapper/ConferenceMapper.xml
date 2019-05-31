@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ethan.oasy.mapper.ConferenceMapper" >
+  <resultMap id="BaseResultMap" type="com.ethan.oasy.pojo.Conference" >
+    <id column="con_id" property="conId" jdbcType="VARCHAR" />
+    <result column="con_theme" property="conTheme" jdbcType="VARCHAR" />
+    <result column="con_type" property="conType" jdbcType="INTEGER" />
+    <result column="con_compere_name" property="conCompereName" jdbcType="VARCHAR" />
+    <result column="con_compere" property="conCompere" jdbcType="VARCHAR" />
+    <result column="con_sponsor_dapart_name" property="conSponsorDapartName" jdbcType="VARCHAR" />
+    <result column="con_sponsor_dapart" property="conSponsorDapart" jdbcType="VARCHAR" />
+    <result column="con_linkman" property="conLinkman" jdbcType="VARCHAR" />
+    <result column="con_linkman_name" property="conLinkmanName" jdbcType="VARCHAR" />
+    <result column="con_linkman_tel" property="conLinkmanTel" jdbcType="VARCHAR" />
+    <result column="con_place_id" property="conPlaceId" jdbcType="INTEGER" />
+    <result column="con_place_name" property="conPlaceName" jdbcType="VARCHAR" />
+    <result column="con_model" property="conModel" jdbcType="INTEGER" />
+    <result column="con_recorder" property="conRecorder" jdbcType="VARCHAR" />
+    <result column="con_recorder_name" property="conRecorderName" jdbcType="VARCHAR" />
+    <result column="con_end_date" property="conEndDate" jdbcType="VARCHAR" />
+    <result column="con_start_date" property="conStartDate" jdbcType="VARCHAR" />
+    <result column="con_status" property="conStatus" jdbcType="INTEGER" />
+    <result column="con_ok_time" property="conOkTime" jdbcType="VARCHAR" />
+    <result column="con_app_time" property="conAppTime" jdbcType="VARCHAR" />
+    <result column="to_staff" property="toStaff" jdbcType="VARCHAR" />
+    <result column="data_status" property="dataStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ethan.oasy.pojo.ConferenceWithBLOBs" extends="BaseResultMap" >
+    <result column="con_record" property="conRecord" jdbcType="LONGVARCHAR" />
+    <result column="con_resource" property="conResource" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    con_id, con_theme, con_type, con_compere_name, con_compere, con_sponsor_dapart_name, 
+    con_sponsor_dapart, con_linkman, con_linkman_name, con_linkman_tel, con_place_id, 
+    con_place_name, con_model, con_recorder, con_recorder_name, con_end_date, con_start_date, 
+    con_status, con_ok_time, con_app_time, to_staff, data_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    con_record, con_resource
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ethan.oasy.pojo.ConferenceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from conference
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ethan.oasy.pojo.ConferenceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from conference
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from conference
+    where con_id = #{conId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from conference
+    where con_id = #{conId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ethan.oasy.pojo.ConferenceExample" >
+    delete from conference
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ethan.oasy.pojo.ConferenceWithBLOBs" >
+    insert into conference (con_id, con_theme, con_type, 
+      con_compere_name, con_compere, con_sponsor_dapart_name, 
+      con_sponsor_dapart, con_linkman, con_linkman_name, 
+      con_linkman_tel, con_place_id, con_place_name, 
+      con_model, con_recorder, con_recorder_name, 
+      con_end_date, con_start_date, con_status, 
+      con_ok_time, con_app_time, to_staff, 
+      data_status, con_record, con_resource
+      )
+    values (#{conId,jdbcType=VARCHAR}, #{conTheme,jdbcType=VARCHAR}, #{conType,jdbcType=INTEGER}, 
+      #{conCompereName,jdbcType=VARCHAR}, #{conCompere,jdbcType=VARCHAR}, #{conSponsorDapartName,jdbcType=VARCHAR}, 
+      #{conSponsorDapart,jdbcType=VARCHAR}, #{conLinkman,jdbcType=VARCHAR}, #{conLinkmanName,jdbcType=VARCHAR}, 
+      #{conLinkmanTel,jdbcType=VARCHAR}, #{conPlaceId,jdbcType=INTEGER}, #{conPlaceName,jdbcType=VARCHAR}, 
+      #{conModel,jdbcType=INTEGER}, #{conRecorder,jdbcType=VARCHAR}, #{conRecorderName,jdbcType=VARCHAR}, 
+      #{conEndDate,jdbcType=VARCHAR}, #{conStartDate,jdbcType=VARCHAR}, #{conStatus,jdbcType=INTEGER}, 
+      #{conOkTime,jdbcType=VARCHAR}, #{conAppTime,jdbcType=VARCHAR}, #{toStaff,jdbcType=VARCHAR}, 
+      #{dataStatus,jdbcType=INTEGER}, #{conRecord,jdbcType=LONGVARCHAR}, #{conResource,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ethan.oasy.pojo.ConferenceWithBLOBs" >
+    insert into conference
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="conId != null" >
+        con_id,
+      </if>
+      <if test="conTheme != null" >
+        con_theme,
+      </if>
+      <if test="conType != null" >
+        con_type,
+      </if>
+      <if test="conCompereName != null" >
+        con_compere_name,
+      </if>
+      <if test="conCompere != null" >
+        con_compere,
+      </if>
+      <if test="conSponsorDapartName != null" >
+        con_sponsor_dapart_name,
+      </if>
+      <if test="conSponsorDapart != null" >
+        con_sponsor_dapart,
+      </if>
+      <if test="conLinkman != null" >
+        con_linkman,
+      </if>
+      <if test="conLinkmanName != null" >
+        con_linkman_name,
+      </if>
+      <if test="conLinkmanTel != null" >
+        con_linkman_tel,
+      </if>
+      <if test="conPlaceId != null" >
+        con_place_id,
+      </if>
+      <if test="conPlaceName != null" >
+        con_place_name,
+      </if>
+      <if test="conModel != null" >
+        con_model,
+      </if>
+      <if test="conRecorder != null" >
+        con_recorder,
+      </if>
+      <if test="conRecorderName != null" >
+        con_recorder_name,
+      </if>
+      <if test="conEndDate != null" >
+        con_end_date,
+      </if>
+      <if test="conStartDate != null" >
+        con_start_date,
+      </if>
+      <if test="conStatus != null" >
+        con_status,
+      </if>
+      <if test="conOkTime != null" >
+        con_ok_time,
+      </if>
+      <if test="conAppTime != null" >
+        con_app_time,
+      </if>
+      <if test="toStaff != null" >
+        to_staff,
+      </if>
+      <if test="dataStatus != null" >
+        data_status,
+      </if>
+      <if test="conRecord != null" >
+        con_record,
+      </if>
+      <if test="conResource != null" >
+        con_resource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="conId != null" >
+        #{conId,jdbcType=VARCHAR},
+      </if>
+      <if test="conTheme != null" >
+        #{conTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="conType != null" >
+        #{conType,jdbcType=INTEGER},
+      </if>
+      <if test="conCompereName != null" >
+        #{conCompereName,jdbcType=VARCHAR},
+      </if>
+      <if test="conCompere != null" >
+        #{conCompere,jdbcType=VARCHAR},
+      </if>
+      <if test="conSponsorDapartName != null" >
+        #{conSponsorDapartName,jdbcType=VARCHAR},
+      </if>
+      <if test="conSponsorDapart != null" >
+        #{conSponsorDapart,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkman != null" >
+        #{conLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkmanName != null" >
+        #{conLinkmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkmanTel != null" >
+        #{conLinkmanTel,jdbcType=VARCHAR},
+      </if>
+      <if test="conPlaceId != null" >
+        #{conPlaceId,jdbcType=INTEGER},
+      </if>
+      <if test="conPlaceName != null" >
+        #{conPlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="conModel != null" >
+        #{conModel,jdbcType=INTEGER},
+      </if>
+      <if test="conRecorder != null" >
+        #{conRecorder,jdbcType=VARCHAR},
+      </if>
+      <if test="conRecorderName != null" >
+        #{conRecorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="conEndDate != null" >
+        #{conEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="conStartDate != null" >
+        #{conStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="conStatus != null" >
+        #{conStatus,jdbcType=INTEGER},
+      </if>
+      <if test="conOkTime != null" >
+        #{conOkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="conAppTime != null" >
+        #{conAppTime,jdbcType=VARCHAR},
+      </if>
+      <if test="toStaff != null" >
+        #{toStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        #{dataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="conRecord != null" >
+        #{conRecord,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="conResource != null" >
+        #{conResource,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ethan.oasy.pojo.ConferenceExample" resultType="java.lang.Integer" >
+    select count(*) from conference
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update conference
+    <set >
+      <if test="record.conId != null" >
+        con_id = #{record.conId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conTheme != null" >
+        con_theme = #{record.conTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conType != null" >
+        con_type = #{record.conType,jdbcType=INTEGER},
+      </if>
+      <if test="record.conCompereName != null" >
+        con_compere_name = #{record.conCompereName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conCompere != null" >
+        con_compere = #{record.conCompere,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conSponsorDapartName != null" >
+        con_sponsor_dapart_name = #{record.conSponsorDapartName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conSponsorDapart != null" >
+        con_sponsor_dapart = #{record.conSponsorDapart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conLinkman != null" >
+        con_linkman = #{record.conLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conLinkmanName != null" >
+        con_linkman_name = #{record.conLinkmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conLinkmanTel != null" >
+        con_linkman_tel = #{record.conLinkmanTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conPlaceId != null" >
+        con_place_id = #{record.conPlaceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.conPlaceName != null" >
+        con_place_name = #{record.conPlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conModel != null" >
+        con_model = #{record.conModel,jdbcType=INTEGER},
+      </if>
+      <if test="record.conRecorder != null" >
+        con_recorder = #{record.conRecorder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conRecorderName != null" >
+        con_recorder_name = #{record.conRecorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conEndDate != null" >
+        con_end_date = #{record.conEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conStartDate != null" >
+        con_start_date = #{record.conStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conStatus != null" >
+        con_status = #{record.conStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.conOkTime != null" >
+        con_ok_time = #{record.conOkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conAppTime != null" >
+        con_app_time = #{record.conAppTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toStaff != null" >
+        to_staff = #{record.toStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataStatus != null" >
+        data_status = #{record.dataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.conRecord != null" >
+        con_record = #{record.conRecord,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.conResource != null" >
+        con_resource = #{record.conResource,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update conference
+    set con_id = #{record.conId,jdbcType=VARCHAR},
+      con_theme = #{record.conTheme,jdbcType=VARCHAR},
+      con_type = #{record.conType,jdbcType=INTEGER},
+      con_compere_name = #{record.conCompereName,jdbcType=VARCHAR},
+      con_compere = #{record.conCompere,jdbcType=VARCHAR},
+      con_sponsor_dapart_name = #{record.conSponsorDapartName,jdbcType=VARCHAR},
+      con_sponsor_dapart = #{record.conSponsorDapart,jdbcType=VARCHAR},
+      con_linkman = #{record.conLinkman,jdbcType=VARCHAR},
+      con_linkman_name = #{record.conLinkmanName,jdbcType=VARCHAR},
+      con_linkman_tel = #{record.conLinkmanTel,jdbcType=VARCHAR},
+      con_place_id = #{record.conPlaceId,jdbcType=INTEGER},
+      con_place_name = #{record.conPlaceName,jdbcType=VARCHAR},
+      con_model = #{record.conModel,jdbcType=INTEGER},
+      con_recorder = #{record.conRecorder,jdbcType=VARCHAR},
+      con_recorder_name = #{record.conRecorderName,jdbcType=VARCHAR},
+      con_end_date = #{record.conEndDate,jdbcType=VARCHAR},
+      con_start_date = #{record.conStartDate,jdbcType=VARCHAR},
+      con_status = #{record.conStatus,jdbcType=INTEGER},
+      con_ok_time = #{record.conOkTime,jdbcType=VARCHAR},
+      con_app_time = #{record.conAppTime,jdbcType=VARCHAR},
+      to_staff = #{record.toStaff,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=INTEGER},
+      con_record = #{record.conRecord,jdbcType=LONGVARCHAR},
+      con_resource = #{record.conResource,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update conference
+    set con_id = #{record.conId,jdbcType=VARCHAR},
+      con_theme = #{record.conTheme,jdbcType=VARCHAR},
+      con_type = #{record.conType,jdbcType=INTEGER},
+      con_compere_name = #{record.conCompereName,jdbcType=VARCHAR},
+      con_compere = #{record.conCompere,jdbcType=VARCHAR},
+      con_sponsor_dapart_name = #{record.conSponsorDapartName,jdbcType=VARCHAR},
+      con_sponsor_dapart = #{record.conSponsorDapart,jdbcType=VARCHAR},
+      con_linkman = #{record.conLinkman,jdbcType=VARCHAR},
+      con_linkman_name = #{record.conLinkmanName,jdbcType=VARCHAR},
+      con_linkman_tel = #{record.conLinkmanTel,jdbcType=VARCHAR},
+      con_place_id = #{record.conPlaceId,jdbcType=INTEGER},
+      con_place_name = #{record.conPlaceName,jdbcType=VARCHAR},
+      con_model = #{record.conModel,jdbcType=INTEGER},
+      con_recorder = #{record.conRecorder,jdbcType=VARCHAR},
+      con_recorder_name = #{record.conRecorderName,jdbcType=VARCHAR},
+      con_end_date = #{record.conEndDate,jdbcType=VARCHAR},
+      con_start_date = #{record.conStartDate,jdbcType=VARCHAR},
+      con_status = #{record.conStatus,jdbcType=INTEGER},
+      con_ok_time = #{record.conOkTime,jdbcType=VARCHAR},
+      con_app_time = #{record.conAppTime,jdbcType=VARCHAR},
+      to_staff = #{record.toStaff,jdbcType=VARCHAR},
+      data_status = #{record.dataStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ethan.oasy.pojo.ConferenceWithBLOBs" >
+    update conference
+    <set >
+      <if test="conTheme != null" >
+        con_theme = #{conTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="conType != null" >
+        con_type = #{conType,jdbcType=INTEGER},
+      </if>
+      <if test="conCompereName != null" >
+        con_compere_name = #{conCompereName,jdbcType=VARCHAR},
+      </if>
+      <if test="conCompere != null" >
+        con_compere = #{conCompere,jdbcType=VARCHAR},
+      </if>
+      <if test="conSponsorDapartName != null" >
+        con_sponsor_dapart_name = #{conSponsorDapartName,jdbcType=VARCHAR},
+      </if>
+      <if test="conSponsorDapart != null" >
+        con_sponsor_dapart = #{conSponsorDapart,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkman != null" >
+        con_linkman = #{conLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkmanName != null" >
+        con_linkman_name = #{conLinkmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="conLinkmanTel != null" >
+        con_linkman_tel = #{conLinkmanTel,jdbcType=VARCHAR},
+      </if>
+      <if test="conPlaceId != null" >
+        con_place_id = #{conPlaceId,jdbcType=INTEGER},
+      </if>
+      <if test="conPlaceName != null" >
+        con_place_name = #{conPlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="conModel != null" >
+        con_model = #{conModel,jdbcType=INTEGER},
+      </if>
+      <if test="conRecorder != null" >
+        con_recorder = #{conRecorder,jdbcType=VARCHAR},
+      </if>
+      <if test="conRecorderName != null" >
+        con_recorder_name = #{conRecorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="conEndDate != null" >
+        con_end_date = #{conEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="conStartDate != null" >
+        con_start_date = #{conStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="conStatus != null" >
+        con_status = #{conStatus,jdbcType=INTEGER},
+      </if>
+      <if test="conOkTime != null" >
+        con_ok_time = #{conOkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="conAppTime != null" >
+        con_app_time = #{conAppTime,jdbcType=VARCHAR},
+      </if>
+      <if test="toStaff != null" >
+        to_staff = #{toStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="dataStatus != null" >
+        data_status = #{dataStatus,jdbcType=INTEGER},
+      </if>
+      <if test="conRecord != null" >
+        con_record = #{conRecord,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="conResource != null" >
+        con_resource = #{conResource,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where con_id = #{conId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ethan.oasy.pojo.ConferenceWithBLOBs" >
+    update conference
+    set con_theme = #{conTheme,jdbcType=VARCHAR},
+      con_type = #{conType,jdbcType=INTEGER},
+      con_compere_name = #{conCompereName,jdbcType=VARCHAR},
+      con_compere = #{conCompere,jdbcType=VARCHAR},
+      con_sponsor_dapart_name = #{conSponsorDapartName,jdbcType=VARCHAR},
+      con_sponsor_dapart = #{conSponsorDapart,jdbcType=VARCHAR},
+      con_linkman = #{conLinkman,jdbcType=VARCHAR},
+      con_linkman_name = #{conLinkmanName,jdbcType=VARCHAR},
+      con_linkman_tel = #{conLinkmanTel,jdbcType=VARCHAR},
+      con_place_id = #{conPlaceId,jdbcType=INTEGER},
+      con_place_name = #{conPlaceName,jdbcType=VARCHAR},
+      con_model = #{conModel,jdbcType=INTEGER},
+      con_recorder = #{conRecorder,jdbcType=VARCHAR},
+      con_recorder_name = #{conRecorderName,jdbcType=VARCHAR},
+      con_end_date = #{conEndDate,jdbcType=VARCHAR},
+      con_start_date = #{conStartDate,jdbcType=VARCHAR},
+      con_status = #{conStatus,jdbcType=INTEGER},
+      con_ok_time = #{conOkTime,jdbcType=VARCHAR},
+      con_app_time = #{conAppTime,jdbcType=VARCHAR},
+      to_staff = #{toStaff,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=INTEGER},
+      con_record = #{conRecord,jdbcType=LONGVARCHAR},
+      con_resource = #{conResource,jdbcType=LONGVARCHAR}
+    where con_id = #{conId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ethan.oasy.pojo.Conference" >
+    update conference
+    set con_theme = #{conTheme,jdbcType=VARCHAR},
+      con_type = #{conType,jdbcType=INTEGER},
+      con_compere_name = #{conCompereName,jdbcType=VARCHAR},
+      con_compere = #{conCompere,jdbcType=VARCHAR},
+      con_sponsor_dapart_name = #{conSponsorDapartName,jdbcType=VARCHAR},
+      con_sponsor_dapart = #{conSponsorDapart,jdbcType=VARCHAR},
+      con_linkman = #{conLinkman,jdbcType=VARCHAR},
+      con_linkman_name = #{conLinkmanName,jdbcType=VARCHAR},
+      con_linkman_tel = #{conLinkmanTel,jdbcType=VARCHAR},
+      con_place_id = #{conPlaceId,jdbcType=INTEGER},
+      con_place_name = #{conPlaceName,jdbcType=VARCHAR},
+      con_model = #{conModel,jdbcType=INTEGER},
+      con_recorder = #{conRecorder,jdbcType=VARCHAR},
+      con_recorder_name = #{conRecorderName,jdbcType=VARCHAR},
+      con_end_date = #{conEndDate,jdbcType=VARCHAR},
+      con_start_date = #{conStartDate,jdbcType=VARCHAR},
+      con_status = #{conStatus,jdbcType=INTEGER},
+      con_ok_time = #{conOkTime,jdbcType=VARCHAR},
+      con_app_time = #{conAppTime,jdbcType=VARCHAR},
+      to_staff = #{toStaff,jdbcType=VARCHAR},
+      data_status = #{dataStatus,jdbcType=INTEGER}
+    where con_id = #{conId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getMyAll" resultMap="ResultMapWithBLOBs">
+    SELECT
+      con.*
+    FROM conference_part cp,conference con,staff s
+    WHERE cp.`conference_id` = con.`con_id` AND con.`data_status` = 1
+      AND s.`staff_id` = con.`con_linkman`AND cp.`part_id` = #{staffId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getMyDealConference" resultMap="ResultMapWithBLOBs">
+    SELECT
+      con.*
+    FROM conference con
+    WHERE con.`data_status` = 1 AND con.`con_status` = #{status,jdbcType=INTEGER} AND con.`to_staff` = #{staffId,jdbcType=VARCHAR}
+  </select>
+</mapper>
